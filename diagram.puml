@@ -1,0 +1,50 @@
+@startuml diagram
+!theme reddress-lightblue
+
+abstract Task {
+-name: String
+-description: String
+-dueDate: Date
+-taskStatus: boolean
+#String getName()
+#String getDescription()
+#Date getDueDate()
+#boolean getTaskStatus()
+}
+
+class RecurringTask {
+-recurrencePattern: String
++String getRecurrence()
+}
+
+class RegularTask {
+-priority: int
++int getPriority()
+}
+
+class ImportantTask {
+-isUrgent: boolean
++boolean getUrgency()
+}
+
+class TodoList {
+-list: ArrayList<Task>
++void addTask(task: Task)
++void deleteTask(i: int)
++ArrayList<Task> displayTasks()
+}
+
+class User {
+-todoList: TodoList
++void displayTodoList()
+}
+
+
+Task <|-- RecurringTask
+Task <|-- RegularTask
+Task <|-- ImportantTask
+RecurringTask o-- TodoList
+RegularTask o-- TodoList
+ImportantTask o-- TodoList
+TodoList *-- User
+@enduml
