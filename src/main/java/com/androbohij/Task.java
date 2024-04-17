@@ -1,3 +1,4 @@
+package com.androbohij;
 import java.util.Date;
 
 //felt like trying out abstract classes since we're doing class relationships

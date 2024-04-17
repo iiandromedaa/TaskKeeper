@@ -1,3 +1,4 @@
+package com.androbohij;
 import java.util.ArrayList;
 
 public class User {
@@ -14,7 +15,9 @@ public class User {
 
     public void displayTodoList() {
         ArrayList<Task> list = todoList.displayTasks();
-        for (Task task : list) {
+        for (int i = 0; i < list.size(); i++) {
+            Task task = list.get(i);
+            System.out.print("[" + i + "] ");
             if (task instanceof RecurringTask) {
                 //yippee explicit casts
                 System.out.print("Task type: Recurring, ");
