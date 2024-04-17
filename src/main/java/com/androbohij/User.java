@@ -13,6 +13,11 @@ public class User {
         return todoList;
     }
 
+    @Deprecated
+    /**
+     * since im using javafx now i dont really need this
+     * but its a silly relic of when this was in the command line
+     */
     public void displayTodoList() {
         ArrayList<Task> list = todoList.displayTasks();
         for (int i = 0; i < list.size(); i++) {

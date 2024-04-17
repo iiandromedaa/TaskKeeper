@@ -1,8 +1,10 @@
 package com.androbohij;
+import java.io.Serializable;
 import java.util.Date;
 
 //felt like trying out abstract classes since we're doing class relationships
-public abstract class Task {
+//also serialization to save your tasks
+public abstract class Task implements Serializable {
 
     private String name;
     private String description;

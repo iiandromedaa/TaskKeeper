@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.androbohij.mainController">
+   <top>
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="menuAdd" mnemonicParsing="false" onAction="#addTaskDialog" text="Add" />
+            <Menu fx:id="menuView" mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem fx:id="menuViewTaskList" mnemonicParsing="false" onAction="#openTaskList" text="Task List" />
+              </items>
+            </Menu>
+          <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="menuHelpAbout" mnemonicParsing="false" onAction="#openAbout" text="About" />
+                  <MenuItem fx:id="menuHelpClose" mnemonicParsing="false" onAction="#closeApp" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <ScrollPane fx:id="scrollPane" pannable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane fx:id="canvas" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="1080.0" prefWidth="1920.0" styleClass="canvas" stylesheets="@main.css" />
+        </content>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <ButtonBar prefHeight="0.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <buttons>
+            <Label fx:id="versionLabel" text="version" />
+            <ImageView fx:id="heartsLabel" fitHeight="16.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@flag.png" />
+               </image>
+            </ImageView>
+         </buttons>
+      </ButtonBar>
+   </bottom>
+</BorderPane>
