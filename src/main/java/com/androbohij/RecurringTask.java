@@ -3,6 +3,9 @@ import java.util.Date;
 
 public class RecurringTask extends Task {
 
+    /**
+     * could have been an enum but the assignment said string, so string it is
+     */
     private String recurrencePattern;
 
     public RecurringTask(String name, String description, Date dueDate, boolean taskStatus, String recurrencePattern) {

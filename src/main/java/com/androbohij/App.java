@@ -51,6 +51,7 @@ public class App extends Application {
         user = new User();
         try {
             user.setTodoList(SaveLoad.load());
+            user.displayTodoList();
         } catch (FileNotFoundException e) {
             System.out.println("no saves found, starting fresh");
         } catch (ClassNotFoundException e) {
@@ -63,14 +64,28 @@ public class App extends Application {
         return user;
     }
 
-    public static void makePopUp(String title) throws IOException {
+    public static Stage makePopUp(String title) throws IOException {
         Stage popUp = new Stage();
         popUp.setTitle(title);
         popUp.initModality(Modality.WINDOW_MODAL);
+        System.out.println(title.toLowerCase().replaceAll("\\s+",""));
+        scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
+        popUp.setScene(scene);
+        popUp.setResizable(false);
+        popUp.show();
+        return popUp;
+    }
+
+    public static Stage makePopUp(String title, Stage owner) throws IOException {
+        Stage popUp = new Stage();
+        popUp.setTitle(title);
+        popUp.initModality(Modality.WINDOW_MODAL);
+        popUp.initOwner(owner);
         scene = new Scene(loadFXML(title.toLowerCase(), popUp));
         popUp.setScene(scene);
         popUp.setResizable(false);
         popUp.show();
+        return popUp;
     }
 
 }

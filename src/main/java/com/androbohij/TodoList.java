@@ -24,6 +24,13 @@ public class TodoList implements Serializable {
         list.remove(i);
     }
 
+    /**
+     * @param task surgical strike on this specific task
+     */
+    public void removeTask(Task task) {
+        list.remove(task);
+    }
+
     //hands off tasklist to be printed by user class, i feel like 
     //it should handle printing since its more front facing
     /**

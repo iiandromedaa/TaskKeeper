@@ -68,10 +68,10 @@ public abstract class Task implements Serializable {
         return taskStatus;
     }
 
-    public TaskTypes getTaskType(Task task) {
-        if (task instanceof ImportantTask)
+    public TaskTypes getTaskType() {
+        if (this instanceof ImportantTask)
             return TaskTypes.IMPORTANT;
-        else if (task instanceof RecurringTask)
+        else if (this instanceof RecurringTask)
             return TaskTypes.RECURRING;
         else
             return TaskTypes.REGULAR;

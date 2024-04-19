@@ -4,35 +4,49 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="taskRoot" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="taskRoot" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.androbohij.TaskController">
    <children>
       <TitledPane fx:id="titleBar" animated="false" prefHeight="225.0" prefWidth="250.0" text="taskName">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <content>
-            <HBox id="hbox" fillHeight="false" prefHeight="100.0" prefWidth="200.0" stylesheets="@main.css">
+            <HBox id="hbox" fx:id="taskContent" fillHeight="false" prefHeight="100.0" prefWidth="200.0" stylesheets="@main.css">
                <children>
-                  <Pane id="typeBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="50.0" stylesheets="@main.css">
+                  <Pane id="typeBar" fx:id="taskSideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="50.0" stylesheets="@main.css">
                      <children>
                         <CheckBox alignment="TOP_LEFT" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" scaleZ="2.0" />
+                        <Label fx:id="taskType" alignment="TOP_LEFT" layoutX="-36.0" layoutY="128.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="17.0" prefWidth="100.0" rotate="270.0" text="taskType" />
                      </children>
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Pane>
-                  <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" stylesheets="@main.css">
+                  <Pane fx:id="taskContentPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@main.css">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="taskDescription" alignment="TOP_LEFT" prefHeight="200.0" prefWidth="200.0" text="taskDescription" />
+                              <Label fx:id="taskDueDate" prefHeight="100.0" prefWidth="200.0" text="taskDueDate" />
+                              <Label fx:id="taskQuality" prefHeight="100.0" prefWidth="200.0" text="taskQuality" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
                   </Pane>
                </children>
             </HBox>

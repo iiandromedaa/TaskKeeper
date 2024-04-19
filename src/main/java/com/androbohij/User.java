@@ -21,7 +21,7 @@ public class User {
      * @param todoList to be loaded
      */
     public void setTodoList(TodoList todoList) {
-
+        this.todoList = todoList;
     }
 
     @Deprecated

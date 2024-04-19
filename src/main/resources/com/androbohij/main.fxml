@@ -15,7 +15,10 @@
    <top>
       <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
         <menus>
-          <Menu fx:id="menuAdd" mnemonicParsing="false" onAction="#addTaskDialog" text="Add" />
+          <Menu fx:id="menuAdd" mnemonicParsing="false" text="Add">
+               <items>
+                  <MenuItem fx:id="addNewTask" mnemonicParsing="false" onAction="#addTaskDialog" text="New Task" />
+               </items></Menu>
             <Menu fx:id="menuView" mnemonicParsing="false" text="View">
               <items>
                 <MenuItem fx:id="menuViewTaskList" mnemonicParsing="false" onAction="#openTaskList" text="Task List" />
