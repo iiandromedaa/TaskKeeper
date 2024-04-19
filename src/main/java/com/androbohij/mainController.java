@@ -1,5 +1,7 @@
 package com.androbohij;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 
-public class mainController {
+public class MainController extends Controller {
 
     @FXML
     private BorderPane borderPane;
@@ -68,13 +70,16 @@ public class mainController {
 
     @FXML
     void closeApp(ActionEvent event) {
-        App.save();
         Platform.exit();
     }
 
     @FXML
     void openAbout(ActionEvent event) {
-
+        try {
+            App.makePopUp("About");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -9,8 +9,19 @@ public class User {
         todoList = new TodoList();
     }
 
+    /**
+     * @return todolist associated with user object
+     */
     public TodoList getTodoList() {
         return todoList;
+    }
+
+    /**
+     * for injecting a todolist into the user object when loading from save
+     * @param todoList to be loaded
+     */
+    public void setTodoList(TodoList todoList) {
+
     }
 
     @Deprecated
