@@ -6,9 +6,11 @@ import java.util.Date;
 import com.androbohij.Task.TaskTypes;
 
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -21,6 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 
 public class MainController extends Controller {
+
+    private static Bounds viewportBounds;
 
     @FXML
     private MenuItem addNewTask;
@@ -68,6 +72,18 @@ public class MainController extends Controller {
         canvas.addEventHandler(MouseEvent.ANY, event -> {
             if (event.getButton() != MouseButton.MIDDLE) event.consume();
         });
+
+        InvalidationListener l = o -> update();
+        scrollPane.viewportBoundsProperty().addListener(l);
+    }
+
+    private void update() {
+        viewportBounds = scrollPane.getViewportBounds();
+    }
+
+    //fuck it we static, theres 
+    public static Bounds getBounds() {
+        return viewportBounds;
     }
 
     @FXML
@@ -114,11 +130,11 @@ public class MainController extends Controller {
             task = new RegularTask(name, desc, dueDate, false, priority);
         } 
         
-        // Scene scene = new Scene(par);
         canvas.getChildren().add(par);
-        par.relocate(100, 100);
         par.addEventHandler (MouseEvent.MOUSE_RELEASED, ev -> par.toFront ());
         App.getUser().getTodoList().addTask(task);
+        ((TaskController)fxmlLoader.getController()).setStage(getStage());
+        ((TaskController)fxmlLoader.getController()).bindings(canvas);
         ((TaskController)fxmlLoader.getController()).setTask(task);
         
     }

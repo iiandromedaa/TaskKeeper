@@ -49,6 +49,7 @@ public class User {
             System.out.print(", Task description: " + task.getDescription());
             System.out.print(", Task due date: " + task.getDueDate().toString());
             System.out.println(", Task completion: " + task.getTaskStatus());
+            System.out.println("task card x: " + task.getX() + " task card y: " + task.getY());
         }
     }
 

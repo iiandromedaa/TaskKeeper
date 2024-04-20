@@ -11,13 +11,13 @@ public abstract class Task implements Serializable {
     private Date dueDate;
     private boolean taskStatus;
     /**
-     * exists only to store task card position for serialization
+     * exists only to store task card x position for serialization
      */
-    private int x;
+    private double x;
     /**
-     * exists only to store task card position for serialization
+     * exists only to store task card y position for serialization
      */
-    private int y;
+    private double y;
 
     protected Task(String name, String description, Date dueDate, boolean taskStatus) {
         this.name = name;
@@ -29,14 +29,14 @@ public abstract class Task implements Serializable {
     /**
      * @return x position of task card
      */
-    protected int getX() {
+    protected double getX() {
         return x;
     }
 
     /**
      * @return y position of task card
      */
-    protected int getY() {
+    protected double getY() {
         return y;
     }
 
@@ -104,15 +104,15 @@ public abstract class Task implements Serializable {
     /**
      * @param x x position to set task card to
      */
-    protected void setX(int x) {
+    protected void setX(double x) {
         this.x = x;
     }
 
     /**
      * @param y y position to set task card to
      */
-    protected void setY(int y) {
-        this.x = y;
+    protected void setY(double y) {
+        this.y = y;
     }
 
 }

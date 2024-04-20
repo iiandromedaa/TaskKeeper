@@ -9,3 +9,15 @@
 #taskRoot {
     -fx-background-color: transparent;
 }
+
+.important {
+
+}
+
+.recurring {
+    /* -fx-background-image: url(./niko.png); */
+}
+
+.regular {
+
+}
