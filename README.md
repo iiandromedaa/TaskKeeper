@@ -3,3 +3,5 @@ the classes have inheritance and other types of relations <br>
 <br>
 it shows off oop design structure and stuff,,,, <br>
 the whole gui stuff is very extra though that was not required at all
+<br>
+i might continue to maintain this because i want a cute task organizing program
