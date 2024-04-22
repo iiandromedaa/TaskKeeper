@@ -38,9 +38,9 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Label fx:id="taskDescription" alignment="TOP_LEFT" prefHeight="200.0" prefWidth="200.0" text="taskDescription" />
+                              <Label fx:id="taskDescription" alignment="TOP_LEFT" prefHeight="200.0" prefWidth="200.0" text="taskDescription" wrapText="true" />
                               <Label fx:id="taskDueDate" prefHeight="100.0" prefWidth="200.0" text="taskDueDate" />
-                              <Label fx:id="taskQuality" prefHeight="100.0" prefWidth="200.0" text="taskQuality" />
+                              <Label fx:id="taskQuality" alignment="TOP_LEFT" prefHeight="120.0" prefWidth="170.0" text="taskQuality" wrapText="true" />
                            </children>
                            <padding>
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

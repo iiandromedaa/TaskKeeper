@@ -13,12 +13,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.androbohij.controllers.Controller;
+import com.androbohij.controllers.MainController;
 
 public class App extends Application {
 
     private static Scene scene;
     private static User user;
-    public static final String VERSION = "";
+    public static final String VERSION = "1.0.0";
+    private static MainController mc;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -32,6 +34,7 @@ public class App extends Application {
         stage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
         stage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
         stage.setOnHidden(event -> Platform.exit());
+        SaveLoad.loadToGUI(user.getTodoList(), mc);
         stage.show();
     }
 
@@ -48,6 +51,8 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         Parent par = fxmlLoader.load();
         ((Controller)fxmlLoader.getController()).setStage(stage);
+        if (fxml.equals("main"))
+            mc = (MainController)fxmlLoader.getController();
         return par;
     }
 
@@ -55,7 +60,7 @@ public class App extends Application {
         user = new User();
         try {
             user.setTodoList(SaveLoad.load());
-            user.displayTodoList();
+            // user.displayTodoList();
         } catch (FileNotFoundException e) {
             System.out.println("no saves found, starting fresh");
         } catch (ClassNotFoundException e) {
@@ -72,18 +77,6 @@ public class App extends Application {
         Stage popUp = new Stage();
         popUp.setTitle(title);
         popUp.initModality(Modality.WINDOW_MODAL);
-        Scene scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
-        popUp.setScene(scene);
-        popUp.setResizable(false);
-        popUp.show();
-        return popUp;
-    }
-
-    public static Stage makePopUp(String title, Stage owner) throws IOException {
-        Stage popUp = new Stage();
-        popUp.setTitle(title);
-        popUp.initModality(Modality.WINDOW_MODAL);
-        popUp.initOwner(owner);
         Scene scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
         popUp.setScene(scene);
         popUp.setResizable(false);

@@ -5,6 +5,7 @@ public class RecurringTask extends Task {
 
     /**
      * could have been an enum but the assignment said string, so string it is
+     * TODO maybe replace with enum after assignment
      */
     private String recurrencePattern;
 

@@ -11,6 +11,7 @@ public abstract class Task implements Serializable {
 
     private String name;
     private String description;
+    // TODO change Date to LocalDate after initial assignment period
     private Date dueDate;
     private boolean taskStatus;
     /**

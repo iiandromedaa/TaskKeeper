@@ -3,7 +3,7 @@ package com.androbohij.controllers;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import com.androbohij.App;
@@ -12,10 +12,9 @@ import com.androbohij.RecurringTask;
 import com.androbohij.RegularTask;
 import com.androbohij.Task;
 import com.androbohij.Task.TaskTypes;
+import com.androbohij.controllers.insertcontrollers.InsertController;
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +35,6 @@ public class AddTaskController extends Controller {
     private int priority;
     private boolean isUrgent;
     private String recurrencePattern;
-    private LocalDate datePicked;
 
     @FXML
     private AnchorPane anchorPane;
@@ -72,15 +70,16 @@ public class AddTaskController extends Controller {
 
     @FXML
     void validate(ActionEvent event) throws IOException {
-        System.out.println(datePicker.getValue());
-        if ((taskNameField.getText().isBlank() || datePicker.getEditor().getText().isBlank() 
+        if ((taskNameField.getText().isBlank() || datePicker.getEditor().getText().isBlank()
         || datePicker.getValue() == null || taskTypeBox.getSelectionModel().isEmpty())
-        || (taskTypeBox.getSelectionModel().getSelectedItem().equals(TaskTypes.RECURRING) && recurrencePattern == null)) {
+        || (taskTypeBox.getSelectionModel().getSelectedItem().equals(TaskTypes.RECURRING)
+        && recurrencePattern == null)) {
             denier.setText("Missing required fields!");
             return;
         } else {
             Date date = Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            createTask(taskTypeBox.getSelectionModel().getSelectedItem(), taskNameField.getText(), taskDescArea.getText(), date, isUrgent, recurrencePattern, priority);
+            createTask(taskTypeBox.getSelectionModel().getSelectedItem(), taskNameField.getText(), 
+                       taskDescArea.getText(), date, isUrgent, recurrencePattern, priority);
             cancel(event);
         }
     }
@@ -89,14 +88,27 @@ public class AddTaskController extends Controller {
         TaskTypes list[] = {TaskTypes.REGULAR, TaskTypes.RECURRING, TaskTypes.IMPORTANT};
         taskTypeBox.setItems(FXCollections.observableArrayList(list));
 
+        //TODO load exclusive field panes
         taskTypeBox.setOnAction(event -> {
             TaskTypes taskTypes = taskTypeBox.getSelectionModel().getSelectedItem();
             if (taskTypes.equals(TaskTypes.REGULAR)) {
-                System.out.println("reg");
+                try {
+                    loadInsert("regular");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (taskTypes.equals(TaskTypes.RECURRING)) {
-                System.out.println("rec");
+                try {
+                    loadInsert("recurring");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (taskTypes.equals(TaskTypes.IMPORTANT)) {
-                System.out.println("imp");
+                try {
+                    loadInsert("important");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -114,10 +126,6 @@ public class AddTaskController extends Controller {
 
     public void bindings(AnchorPane ap) {
         canvas = ap;
-    }
-
-    private void update() {
-
     }
 
     private void createTask(TaskTypes type, String name, String desc, 
@@ -142,16 +150,24 @@ public class AddTaskController extends Controller {
         ((TaskController)fxmlLoader.getController()).setTask(task);
     }
 
+    private void loadInsert(String name) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addtaskinsert/" + name + ".fxml"));
+        AnchorPane par = fxmlLoader.load();
+        ((InsertController)fxmlLoader.getController()).setParent(this);
+        taskQualityPane.getChildren().setAll(par);
+    }
+
     /**
      * as of JavaFX 21, DatePicker throws an exception when given an invalid date so this is a fix for that
      */
     public void fixDatePicker() {
         StringConverter<LocalDate> stringConverter = new StringConverter<LocalDate>() {
-            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
             @Override
             public LocalDate fromString(String value) {
                 try {
-                   return LocalDate.parse(value);
+                   return LocalDate.parse(value, formatter);
                 } catch (Exception e) {
                     datePicker.getEditor().clear();
                     return null;
@@ -159,13 +175,25 @@ public class AddTaskController extends Controller {
             }
 
 			@Override
-			public String toString(LocalDate object) {
-                if (object == null)
+			public String toString(LocalDate date) {
+                if (date == null)
                     return "";
-				return object.toString();
+				return date.format(formatter);
 			}
         };
         datePicker.setConverter(stringConverter);
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setIsUrgent(boolean isUrgent) {
+        this.isUrgent = isUrgent;
+    }
+
+    public void setRecurrencePattern(String recurrencePattern) {
+        this.recurrencePattern = recurrencePattern;
     }
 
 }

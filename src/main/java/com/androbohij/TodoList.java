@@ -30,10 +30,10 @@ public class TodoList implements Serializable {
     public void removeTask(Task task) {
         list.remove(task);
     }
-
-    //hands off tasklist to be printed by user class, i feel like 
-    //it should handle printing since its more front facing
+    
     /**
+     * hands off tasklist to be printed by user class, i feel like
+     * it should handle printing since its more front facing
      * @return this todolist's arraylist containing various tasks
      */
     public ArrayList<Task> displayTasks() {

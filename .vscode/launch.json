@@ -17,12 +17,5 @@
             "mainClass": "com.androbohij/com.androbohij.App",
             "projectName": "todolist235"
         },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "com.androbohij/com.androbohij.Main",
-            "projectName": "todolist235"
-        }
     ]
 }

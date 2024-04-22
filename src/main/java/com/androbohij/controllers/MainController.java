@@ -1,15 +1,8 @@
 package com.androbohij.controllers;
 
 import java.io.IOException;
-import java.util.Date;
-
 import com.androbohij.App;
-import com.androbohij.ImportantTask;
-import com.androbohij.RecurringTask;
-import com.androbohij.RegularTask;
 import com.androbohij.Task;
-import com.androbohij.Task.TaskTypes;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
@@ -74,7 +67,7 @@ public class MainController extends Controller {
     public void initialize() {
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
-        versionLabel.setText("JavaFX " + javafxVersion + " Java " + javaVersion);
+        versionLabel.setText("TaskKeeper " + App.VERSION + " JavaFX " + javafxVersion + " Java " + javaVersion);
 
         canvas.setPrefSize(Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY());
 
@@ -130,23 +123,12 @@ public class MainController extends Controller {
 
     }
 
-    private void createTask(TaskTypes type, String name, String desc, 
-    Date dueDate, boolean urgency, String recurrence, int priority) throws IOException {
+    public void loadTask(Task task) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("task.fxml"));
         AnchorPane par = fxmlLoader.load();
-        Task task;
-
-        if (type.equals(TaskTypes.IMPORTANT)) {
-            task = new ImportantTask(name, desc, dueDate, false, urgency);
-        } else if (type.equals(TaskTypes.RECURRING)) {
-            task = new RecurringTask(name, desc, dueDate, false, recurrence);
-        } else {
-            task = new RegularTask(name, desc, dueDate, false, priority);
-        } 
-        
         canvas.getChildren().add(par);
-        par.addEventHandler (MouseEvent.MOUSE_RELEASED, ev -> par.toFront ());
-        App.getUser().getTodoList().addTask(task);
+        par.addEventHandler (MouseEvent.MOUSE_RELEASED, ev -> par.toFront());
+        par.relocate(task.getX(), task.getY());
         ((TaskController)fxmlLoader.getController()).setStage(getStage());
         ((TaskController)fxmlLoader.getController()).bindings(canvas);
         ((TaskController)fxmlLoader.getController()).setTask(task);

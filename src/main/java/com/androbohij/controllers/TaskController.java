@@ -1,6 +1,9 @@
 package com.androbohij.controllers;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import com.androbohij.App;
@@ -89,7 +92,21 @@ public class TaskController extends Controller {
             taskQuality.setText("Urgent: " + ((ImportantTask)task).getUrgency());
             taskSideBar.getStyleClass().add("important");
         } else if (type.equals(TaskTypes.RECURRING)) {
-            taskQuality.setText("Repeats " + ((RecurringTask)task).getRecurrence() + ", due again on ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            LocalDate nextDue;
+            switch (((RecurringTask)task).getRecurrence()) {
+                case ("Daily"):
+                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1);
+                case ("Weekly"):
+                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusWeeks(1);
+                case ("Monthly"):
+                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusMonths(1);
+                case ("Yearly"):
+                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusYears(1);
+                default:
+                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1);
+            }
+            taskQuality.setText("Repeats " + ((RecurringTask)task).getRecurrence() + ", due again on " + nextDue.format(formatter));
             taskSideBar.getStyleClass().add("recurring");
         } else {
             taskQuality.setText("Priority: " + ((RegularTask)task).getPriority());
@@ -115,9 +132,9 @@ public class TaskController extends Controller {
 
         taskCheck.setOnAction(event -> {
             if (taskCheck.isSelected())
-                taskCardHandle.getStyleClass().add(".strikethrough .text");
+                taskCardHandle.getStyleClass().add("strikethrough");
             else if (!taskCheck.isSelected())
-                taskCardHandle.getStyleClass().remove(0);
+                taskCardHandle.getStyleClass().clear();
         });
     }
 

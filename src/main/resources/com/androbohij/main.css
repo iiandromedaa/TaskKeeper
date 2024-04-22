@@ -23,5 +23,10 @@
 }
 
 .strikethrough .text {
+    /* -fx-font-style: italic; */
     -fx-strikethrough: true;
+}
+
+.notstrikethrough {
+    -fx-strikethrough: false;
 }
