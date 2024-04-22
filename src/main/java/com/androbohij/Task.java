@@ -2,8 +2,11 @@ package com.androbohij;
 import java.io.Serializable;
 import java.util.Date;
 
-//felt like trying out abstract classes since we're doing class relationships
-//also serialization to save your tasks
+/**
+ * felt like trying out abstract classes since we're doing class relationships
+ * <p>
+ * also serialization to save your tasks
+ */
 public abstract class Task implements Serializable {
 
     private String name;
@@ -29,42 +32,42 @@ public abstract class Task implements Serializable {
     /**
      * @return x position of task card
      */
-    protected double getX() {
+    public double getX() {
         return x;
     }
 
     /**
      * @return y position of task card
      */
-    protected double getY() {
+    public double getY() {
         return y;
     }
 
     /**
      * @return returns task's name
      */
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
     /**
      * @return returns task's description
      */
-    protected String getDescription() {
+    public String getDescription() {
         return description;
     }
 
     /**
      * @return returns task's due date
      */
-    protected Date getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
     /**
      * @return returns task's completion status
      */
-    protected boolean getTaskStatus() {
+    public boolean getTaskStatus() {
         return taskStatus;
     }
 
@@ -96,7 +99,8 @@ public abstract class Task implements Serializable {
             this.type = type;
         }
 
-        public String getTypeAsString() {
+        @Override
+        public String toString() {
             return type;
         }
     }
@@ -104,14 +108,14 @@ public abstract class Task implements Serializable {
     /**
      * @param x x position to set task card to
      */
-    protected void setX(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
     /**
      * @param y y position to set task card to
      */
-    protected void setY(double y) {
+    public void setY(double y) {
         this.y = y;
     }
 

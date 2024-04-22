@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="taskRoot" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.androbohij.TaskController">
+<AnchorPane id="taskRoot" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.androbohij.controllers.TaskController">
    <children>
-      <TitledPane fx:id="titleBar" animated="false" prefHeight="225.0" prefWidth="250.0" text="taskName">
+      <TitledPane fx:id="titleBar" animated="false" prefHeight="225.0" prefWidth="250.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -24,7 +24,7 @@
                <children>
                   <Pane id="typeBar" fx:id="taskSideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="50.0" stylesheets="@main.css">
                      <children>
-                        <CheckBox alignment="TOP_LEFT" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" scaleZ="2.0" />
+                        <CheckBox fx:id="taskCheck" alignment="TOP_LEFT" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" scaleZ="2.0" />
                         <Label fx:id="taskType" alignment="TOP_LEFT" layoutX="-36.0" layoutY="128.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="17.0" prefWidth="100.0" rotate="270.0" text="taskType" />
                      </children>
                      <HBox.margin>
@@ -67,5 +67,6 @@
             <Insets top="1.0" />
          </padding>
       </Button>
+      <Label fx:id="taskCardHandle" prefHeight="25.0" prefWidth="200.0" text="taskName" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

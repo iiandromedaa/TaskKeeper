@@ -1,8 +1,8 @@
-package com.androbohij;
+package com.androbohij.controllers;
 
 import javafx.stage.Stage;
 
-public class Controller {
+public abstract class Controller {
     
     private Stage stage;
 

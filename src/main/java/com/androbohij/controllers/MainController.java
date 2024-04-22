@@ -1,8 +1,13 @@
-package com.androbohij;
+package com.androbohij.controllers;
 
 import java.io.IOException;
 import java.util.Date;
 
+import com.androbohij.App;
+import com.androbohij.ImportantTask;
+import com.androbohij.RecurringTask;
+import com.androbohij.RegularTask;
+import com.androbohij.Task;
 import com.androbohij.Task.TaskTypes;
 
 import javafx.application.Platform;
@@ -11,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -20,7 +27,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 public class MainController extends Controller {
 
@@ -87,14 +96,19 @@ public class MainController extends Controller {
     }
 
     @FXML
-    void addTaskDialog(ActionEvent event) {
-        try {
-            // App.makePopUp("Add task", super.getStage());
-            createTask(TaskTypes.RECURRING, "gdfg", "gdfgff", new Date(), false, "daily", 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("i didnt implement the add task dialog yet");
-        }
+    void addTaskDialog(ActionEvent event) throws IOException {
+        Stage popUp = new Stage();
+        popUp.setTitle("Add task");
+        popUp.initModality(Modality.WINDOW_MODAL);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addtask.fxml"));
+        Parent par = fxmlLoader.load();
+        ((Controller)fxmlLoader.getController()).setStage(popUp);
+        ((AddTaskController)fxmlLoader.getController()).bindings(canvas);
+        Scene scene = new Scene(par);
+        popUp.initOwner(getStage());
+        popUp.setScene(scene);
+        popUp.setResizable(false);
+        popUp.show();
     }
 
     @FXML
@@ -136,7 +150,6 @@ public class MainController extends Controller {
         ((TaskController)fxmlLoader.getController()).setStage(getStage());
         ((TaskController)fxmlLoader.getController()).bindings(canvas);
         ((TaskController)fxmlLoader.getController()).setTask(task);
-        
     }
 
 }

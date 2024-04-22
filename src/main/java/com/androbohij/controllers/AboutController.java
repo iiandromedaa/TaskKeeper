@@ -1,4 +1,4 @@
-package com.androbohij;
+package com.androbohij.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

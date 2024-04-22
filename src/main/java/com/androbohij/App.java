@@ -1,6 +1,7 @@
 package com.androbohij;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import com.androbohij.controllers.Controller;
 
 public class App extends Application {
 
@@ -28,6 +31,7 @@ public class App extends Application {
         stage.setMinHeight(480+38);
         stage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
         stage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
+        stage.setOnHidden(event -> Platform.exit());
         stage.show();
     }
 
@@ -47,7 +51,7 @@ public class App extends Application {
         return par;
     }
 
-    public static void run(String[] args) throws FileNotFoundException, ClassNotFoundException, IOException {
+    public static void run(String[] args) throws IOException {
         user = new User();
         try {
             user.setTodoList(SaveLoad.load());
@@ -68,8 +72,7 @@ public class App extends Application {
         Stage popUp = new Stage();
         popUp.setTitle(title);
         popUp.initModality(Modality.WINDOW_MODAL);
-        System.out.println(title.toLowerCase().replaceAll("\\s+",""));
-        scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
+        Scene scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
         popUp.setScene(scene);
         popUp.setResizable(false);
         popUp.show();
@@ -81,7 +84,7 @@ public class App extends Application {
         popUp.setTitle(title);
         popUp.initModality(Modality.WINDOW_MODAL);
         popUp.initOwner(owner);
-        scene = new Scene(loadFXML(title.toLowerCase(), popUp));
+        Scene scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
         popUp.setScene(scene);
         popUp.setResizable(false);
         popUp.show();

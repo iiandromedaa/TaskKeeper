@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="153.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.androbohij.controllers.insertcontrollers.RecurringController">
+   <children>
+      <ComboBox fx:id="recurrence" prefWidth="130.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
+   </children>
+</AnchorPane>

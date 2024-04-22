@@ -1,17 +1,25 @@
-package com.androbohij;
+package com.androbohij.controllers;
 
 import java.text.DateFormat;
 import java.util.Locale;
 
+import com.androbohij.App;
+import com.androbohij.ImportantTask;
+import com.androbohij.RecurringTask;
+import com.androbohij.RegularTask;
+import com.androbohij.Task;
 import com.androbohij.Task.TaskTypes;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -29,6 +37,12 @@ public class TaskController extends Controller {
 
     @FXML
     private Button closeButton;
+
+    @FXML
+    private Label taskCardHandle;
+
+    @FXML
+    private CheckBox taskCheck;
 
     @FXML
     private HBox taskContent;
@@ -67,26 +81,51 @@ public class TaskController extends Controller {
     public void setTask(Task task) {
         this.task = task;
         type = task.getTaskType();
-        titleBar.setText(task.getName());
+        taskCardHandle.setText(task.getName());
         taskDescription.setText(task.getDescription());
-        taskType.setText(type.getTypeAsString());
+        taskType.setText(type.toString());
         taskDueDate.setText("Due on " + DateFormat.getDateInstance(DateFormat.LONG, Locale.US).format(task.getDueDate()));
         if (type.equals(TaskTypes.IMPORTANT)) {
             taskQuality.setText("Urgent: " + ((ImportantTask)task).getUrgency());
+            taskSideBar.getStyleClass().add("important");
         } else if (type.equals(TaskTypes.RECURRING)) {
             taskQuality.setText("Repeats " + ((RecurringTask)task).getRecurrence() + ", due again on ");
             taskSideBar.getStyleClass().add("recurring");
         } else {
             taskQuality.setText("Priority: " + ((RegularTask)task).getPriority());
+            taskSideBar.getStyleClass().add("regular");
         } 
 
-        titleBar.setText(null);
-        Label label = new Label(task.getName() + "test");
-        titleBar.setGraphic(label);
-        drag(label);
+        drag(taskCardHandle);
+
+        titleBar.addEventHandler(MouseEvent.ANY, event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                event.consume();
+            }
+        });
+
+        taskCardHandle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                if (titleBar.isExpanded())
+                    titleBar.setExpanded(false);
+                else
+                    titleBar.setExpanded(true);
+            }
+        }); 
+
+        taskCheck.setOnAction(event -> {
+            if (taskCheck.isSelected())
+                taskCardHandle.getStyleClass().add(".strikethrough .text");
+            else if (!taskCheck.isSelected())
+                taskCardHandle.getStyleClass().remove(0);
+        });
     }
 
     public void initialize() {
+        Tooltip.install(taskCardHandle, new Tooltip("Task title, Left click to drag, Right click to collapse/expand"));
+        Tooltip.install(taskDescription, new Tooltip("Task description"));
+        Tooltip.install(taskType, new Tooltip("Task type"));
+        Tooltip.install(taskCheck, new Tooltip("Task completion"));
     }
 
     public void bindings(AnchorPane ap) {
@@ -95,9 +134,9 @@ public class TaskController extends Controller {
 
     private void drag(Node handle) {
         handle.setOnMousePressed(event -> {
-            //hard coding these offets cause fuck it they seem to work
-            x = event.getX() + 30;
-            y = event.getY() + 30;
+            //hard coding these offets cause they seem to work
+            x = event.getX() + 26;
+            y = event.getY() + 26;
         });
     
         handle.setOnMouseDragged(event -> {
