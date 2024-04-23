@@ -2,6 +2,7 @@ package com.androbohij.controllers;
 
 import java.io.IOException;
 import com.androbohij.App;
+import com.androbohij.Launch;
 import com.androbohij.Task;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -67,7 +68,7 @@ public class MainController extends Controller {
     public void initialize() {
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
-        versionLabel.setText("TaskKeeper " + App.VERSION + " JavaFX " + javafxVersion + " Java " + javaVersion);
+        versionLabel.setText("TaskKeeper " + Launch.VERSION + " | JavaFX " + javafxVersion + " | Java " + javaVersion);
 
         canvas.setPrefSize(Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY());
 
@@ -83,7 +84,6 @@ public class MainController extends Controller {
         viewportBounds = scrollPane.getViewportBounds();
     }
 
-    //fuck it we static, theres 
     public static Bounds getBounds() {
         return viewportBounds;
     }

@@ -1,7 +1,5 @@
 package com.androbohij.controllers.insertcontrollers;
 
-import com.androbohij.controllers.Controller;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -16,7 +14,7 @@ public class RegularController extends InsertController {
     private Spinner<Integer> priority;
 
     @Override
-    public void initialize() {
+    public void bindings() {
         priority.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 3, 1));
         priority.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
@@ -28,7 +26,8 @@ public class RegularController extends InsertController {
                     getParent().setPriority(priority.getValue());
                 }
             }
-          });
+        });
+        priority.getValueFactory().setValue(getParent().getPriority());
     }
 
 

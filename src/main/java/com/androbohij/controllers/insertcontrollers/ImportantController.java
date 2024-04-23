@@ -13,10 +13,11 @@ public class ImportantController extends InsertController {
     private CheckBox urgency;
 
 	@Override
-	public void initialize() {
+	public void bindings() {
         urgency.setOnAction(event -> {
             getParent().setIsUrgent(urgency.isSelected());
         });
+        urgency.setSelected(getParent().getIsUrgent());
     }
 
 }

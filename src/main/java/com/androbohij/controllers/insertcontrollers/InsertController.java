@@ -7,7 +7,7 @@ public abstract class InsertController extends Controller {
     
     private AddTaskController parent;
     
-    public abstract void initialize();
+    public abstract void bindings();
 
     public AddTaskController getParent() {
         return parent;

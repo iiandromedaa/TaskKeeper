@@ -1,6 +1,5 @@
 package com.androbohij.controllers;
 
-import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
 public abstract class Controller {

@@ -25,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
@@ -143,7 +144,9 @@ public class AddTaskController extends Controller {
         } 
         
         canvas.getChildren().add(par);
-        par.addEventHandler (MouseEvent.MOUSE_RELEASED, ev -> par.toFront ());
+        par.addEventHandler(MouseEvent.ANY, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) par.toFront();
+        });
         App.getUser().getTodoList().addTask(task);
         ((TaskController)fxmlLoader.getController()).setStage(getStage());
         ((TaskController)fxmlLoader.getController()).bindings(canvas);
@@ -154,6 +157,7 @@ public class AddTaskController extends Controller {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addtaskinsert/" + name + ".fxml"));
         AnchorPane par = fxmlLoader.load();
         ((InsertController)fxmlLoader.getController()).setParent(this);
+        ((InsertController)fxmlLoader.getController()).bindings();
         taskQualityPane.getChildren().setAll(par);
     }
 
@@ -182,6 +186,18 @@ public class AddTaskController extends Controller {
 			}
         };
         datePicker.setConverter(stringConverter);
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public boolean getIsUrgent() {
+        return isUrgent;
+    }
+
+    public String getRecurrencePattern() {
+        return recurrencePattern;
     }
 
     public void setPriority(int priority) {
