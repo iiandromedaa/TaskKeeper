@@ -1,14 +1,9 @@
 package com.androbohij.controllers;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Date;
-import java.util.Locale;
-
 import com.androbohij.App;
 import com.androbohij.ImportantTask;
 import com.androbohij.RecurringTask;
@@ -87,19 +82,15 @@ public class TaskController extends Controller {
     public void setTask(Task task) {
         this.task = task;
         type = task.getTaskType();
+
         LocalDate date = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
         taskCardHandle.setText(task.getName());
         taskDescription.setText(task.getDescription());
         taskType.setText(type.toString());
-        String inDays;
-        if (LocalDate.now().until(date, ChronoUnit.DAYS) == 1)
-            inDays = "In " + LocalDate.now().until(date, ChronoUnit.DAYS) + " day";
-        else if (LocalDate.now().until(date, ChronoUnit.DAYS) == 0)
-            inDays = "today";
-        else
-            inDays = "In " + LocalDate.now().until(date, ChronoUnit.DAYS) + " days";
-        taskDueDate.setText("Due on " + date.format(formatter) + " (" + inDays + ")");
+        taskDueDate.setText("Due on " + date.format(formatter) + " (" + formatDate(formatter, date) + ")");
+
         if (type.equals(TaskTypes.IMPORTANT)) {
             taskQuality.setText("Urgent: " + ((ImportantTask)task).getUrgency());
             taskSideBar.getStyleClass().add("important");
@@ -128,6 +119,13 @@ public class TaskController extends Controller {
             taskQuality.setText("Priority: " + ((RegularTask)task).getPriority());
             taskSideBar.getStyleClass().add("regular");
         } 
+    }
+
+    public void initialize() {
+        Tooltip.install(taskCardHandle, new Tooltip("Task title, Left click to drag, Right click to collapse/expand"));
+        Tooltip.install(taskDescription, new Tooltip("Task description"));
+        Tooltip.install(taskType, new Tooltip("Task type"));
+        Tooltip.install(taskCheck, new Tooltip("Task completion"));
 
         drag(taskCardHandle);
 
@@ -152,13 +150,6 @@ public class TaskController extends Controller {
             else if (!taskCheck.isSelected())
                 taskCardHandle.getStyleClass().clear();
         });
-    }
-
-    public void initialize() {
-        Tooltip.install(taskCardHandle, new Tooltip("Task title, Left click to drag, Right click to collapse/expand"));
-        Tooltip.install(taskDescription, new Tooltip("Task description"));
-        Tooltip.install(taskType, new Tooltip("Task type"));
-        Tooltip.install(taskCheck, new Tooltip("Task completion"));
     }
 
     public void bindings(AnchorPane ap) {
@@ -204,6 +195,22 @@ public class TaskController extends Controller {
                 task.setY(newY);
             }
         });
+    }
+
+    public String formatDate(DateTimeFormatter dtf, LocalDate taskDate) {
+        switch ((int)LocalDate.now().until(taskDate, ChronoUnit.DAYS)) {
+            case 1:
+                return "In " + LocalDate.now().until(taskDate, ChronoUnit.DAYS) + " day";
+            case 0:
+                return "Today";
+            case -1:
+                return LocalDate.now().until(taskDate, ChronoUnit.DAYS) * -1 + " day ago";
+            default:
+                if (LocalDate.now().until(taskDate, ChronoUnit.DAYS) < -1)
+                    return LocalDate.now().until(taskDate, ChronoUnit.DAYS) * -1 + " days ago";
+                else
+                    return "In " + LocalDate.now().until(taskDate, ChronoUnit.DAYS) + " days";
+        }
     }
 
 }

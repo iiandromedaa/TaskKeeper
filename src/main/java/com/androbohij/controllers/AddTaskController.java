@@ -25,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -94,7 +95,6 @@ public class AddTaskController extends Controller {
         TaskTypes list[] = {TaskTypes.REGULAR, TaskTypes.RECURRING, TaskTypes.IMPORTANT};
         taskTypeBox.setItems(FXCollections.observableArrayList(list));
 
-        //TODO load exclusive field panes
         taskTypeBox.setOnAction(event -> {
             TaskTypes taskTypes = taskTypeBox.getSelectionModel().getSelectedItem();
             if (taskTypes.equals(TaskTypes.REGULAR)) {
@@ -122,10 +122,24 @@ public class AddTaskController extends Controller {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                LocalDate minDate = LocalDate.now();
-                setDisable(date.isBefore(minDate));
+                setDisable(date.isBefore(LocalDate.now()));
             }
         });
+
+        taskNameField.setTextFormatter(new TextFormatter<String>(change -> {
+            if (change.getControlNewText().length() < 25)
+                return change;
+            else
+                return null;
+        }));
+
+        taskDescArea.setTextFormatter(new TextFormatter<String>(change -> {
+            //i settled on 200 char limit from guessing and checking what overflows the box
+            if (change.getControlNewText().length() < 200)
+                return change;
+            else
+                return null;
+        }));
 
         fixDatePicker();
     }

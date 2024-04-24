@@ -129,6 +129,12 @@ public class MainController extends Controller {
         canvas.getChildren().add(par);
         par.addEventHandler (MouseEvent.MOUSE_RELEASED, ev -> par.toFront());
         par.relocate(task.getX(), task.getY());
+        //prevent tasks being stuck offscreen if you load your tasks onto another machine
+        //because im making this app for myself mainly, and thats a case i have already run into
+        if (task.getX() > getStage().getMaxWidth() - par.getWidth())
+            par.relocate(getStage().getMaxWidth() - par.getWidth(), par.getLayoutY());
+        if (task.getY() > getStage().getMaxHeight() - par.getHeight())
+            par.relocate(par.getLayoutX(), getStage().getMaxHeight() - par.getHeight());
         ((TaskController)fxmlLoader.getController()).setStage(getStage());
         ((TaskController)fxmlLoader.getController()).bindings(canvas);
         ((TaskController)fxmlLoader.getController()).setTask(task);
