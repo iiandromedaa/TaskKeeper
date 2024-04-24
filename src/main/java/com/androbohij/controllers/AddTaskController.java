@@ -33,7 +33,12 @@ import javafx.util.StringConverter;
 public class AddTaskController extends Controller {
 
     private AnchorPane canvas;
-    private int priority;
+    /**
+     * default of 1, because the priority spinner starts on 1 and doesn't
+     * send values if it isnt touched at all, so previously this could lead
+     * to regular tasks having a priority of 0 which is not supposed to be possible
+     */
+    private int priority = 1;
     private boolean isUrgent;
     private String recurrencePattern;
 
@@ -129,6 +134,17 @@ public class AddTaskController extends Controller {
         canvas = ap;
     }
 
+    /**
+     * makes tasks
+     * @param type
+     * @param name
+     * @param desc
+     * @param dueDate
+     * @param urgency
+     * @param recurrence
+     * @param priority
+     * @throws IOException
+     */
     private void createTask(TaskTypes type, String name, String desc, 
     Date dueDate, boolean urgency, String recurrence, int priority) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("task.fxml"));

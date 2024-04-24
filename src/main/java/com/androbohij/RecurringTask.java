@@ -15,7 +15,7 @@ public class RecurringTask extends Task {
     }
 
     /**
-     * @return the pattern of this tasks recurrence e.g: "DAILY", "WEEKLY"
+     * @return the pattern of this tasks recurrence e.g: "Daily", "Weekly"
      */
     public String getRecurrence() {
         return recurrencePattern;

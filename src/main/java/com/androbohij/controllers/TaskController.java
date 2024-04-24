@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.util.Locale;
 
 import com.androbohij.App;
@@ -84,27 +87,40 @@ public class TaskController extends Controller {
     public void setTask(Task task) {
         this.task = task;
         type = task.getTaskType();
+        LocalDate date = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         taskCardHandle.setText(task.getName());
         taskDescription.setText(task.getDescription());
         taskType.setText(type.toString());
-        taskDueDate.setText("Due on " + DateFormat.getDateInstance(DateFormat.LONG, Locale.US).format(task.getDueDate()));
+        String inDays;
+        if (LocalDate.now().until(date, ChronoUnit.DAYS) == 1)
+            inDays = "In " + LocalDate.now().until(date, ChronoUnit.DAYS) + " day";
+        else if (LocalDate.now().until(date, ChronoUnit.DAYS) == 0)
+            inDays = "today";
+        else
+            inDays = "In " + LocalDate.now().until(date, ChronoUnit.DAYS) + " days";
+        taskDueDate.setText("Due on " + date.format(formatter) + " (" + inDays + ")");
         if (type.equals(TaskTypes.IMPORTANT)) {
             taskQuality.setText("Urgent: " + ((ImportantTask)task).getUrgency());
             taskSideBar.getStyleClass().add("important");
         } else if (type.equals(TaskTypes.RECURRING)) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             LocalDate nextDue;
             switch (((RecurringTask)task).getRecurrence()) {
-                case ("Daily"):
+                case "Daily":
                     nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1);
-                case ("Weekly"):
+                    break;
+                case "Weekly":
                     nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusWeeks(1);
-                case ("Monthly"):
+                    break;
+                case "Monthly":
                     nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusMonths(1);
-                case ("Yearly"):
+                    break;
+                case "Yearly":
                     nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusYears(1);
+                    break;
                 default:
                     nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1);
+                    break;
             }
             taskQuality.setText("Repeats " + ((RecurringTask)task).getRecurrence() + ", due again on " + nextDue.format(formatter));
             taskSideBar.getStyleClass().add("recurring");
