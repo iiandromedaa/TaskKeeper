@@ -1,11 +1,11 @@
 package com.androbohij;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class RegularTask extends Task {
 
     private int priority;
 
-    public RegularTask(String name, String description, Date dueDate, boolean taskStatus, int priority) {
+    public RegularTask(String name, String description, LocalDate dueDate, boolean taskStatus, int priority) {
         super(name, description, dueDate, taskStatus);
         this.priority = priority;
     }

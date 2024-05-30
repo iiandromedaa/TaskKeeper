@@ -1,11 +1,11 @@
 package com.androbohij;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ImportantTask extends Task {
 
     private boolean isUrgent;
 
-    public ImportantTask(String name, String description, Date dueDate, boolean taskStatus, boolean isUrgent) {
+    public ImportantTask(String name, String description, LocalDate dueDate, boolean taskStatus, boolean isUrgent) {
         super(name, description, dueDate, taskStatus);
         this.isUrgent = isUrgent;
     }

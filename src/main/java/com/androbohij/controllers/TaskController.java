@@ -1,7 +1,6 @@
 package com.androbohij.controllers;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import com.androbohij.App;
@@ -83,7 +82,7 @@ public class TaskController extends Controller {
         this.task = task;
         type = task.getTaskType();
 
-        LocalDate date = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate date = task.getDueDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
         taskCardHandle.setText(task.getName());
@@ -98,19 +97,19 @@ public class TaskController extends Controller {
             LocalDate nextDue;
             switch (((RecurringTask)task).getRecurrence()) {
                 case "Daily":
-                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1);
+                    nextDue = task.getDueDate().plusDays(1);
                     break;
                 case "Weekly":
-                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusWeeks(1);
+                    nextDue = task.getDueDate().plusWeeks(1);
                     break;
                 case "Monthly":
-                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusMonths(1);
+                    nextDue = task.getDueDate().plusMonths(1);
                     break;
                 case "Yearly":
-                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusYears(1);
+                    nextDue = task.getDueDate().plusYears(1);
                     break;
                 default:
-                    nextDue = task.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1);
+                    nextDue = task.getDueDate().plusDays(1);
                     break;
             }
             taskQuality.setText("Repeats " + ((RecurringTask)task).getRecurrence() + ", due again on " + nextDue.format(formatter));

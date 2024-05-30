@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -70,17 +69,6 @@ public class App extends Application {
 
     public static User getUser() {
         return user;
-    }
-
-    public static Stage makePopUp(String title) throws IOException {
-        Stage popUp = new Stage();
-        popUp.setTitle(title);
-        popUp.initModality(Modality.WINDOW_MODAL);
-        Scene scene = new Scene(loadFXML(title.toLowerCase().replaceAll("\\s+",""), popUp));
-        popUp.setScene(scene);
-        popUp.setResizable(false);
-        popUp.show();
-        return popUp;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.androbohij;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * felt like trying out abstract classes since we're doing class relationships
@@ -11,8 +11,7 @@ public abstract class Task implements Serializable {
 
     private String name;
     private String description;
-    // TODO change Date to LocalDate after initial assignment period
-    private Date dueDate;
+    private LocalDate dueDate;
     private boolean taskStatus;
     /**
      * exists only to store task card x position for serialization
@@ -23,7 +22,7 @@ public abstract class Task implements Serializable {
      */
     private double y;
 
-    protected Task(String name, String description, Date dueDate, boolean taskStatus) {
+    protected Task(String name, String description, LocalDate dueDate, boolean taskStatus) {
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
@@ -61,7 +60,7 @@ public abstract class Task implements Serializable {
     /**
      * @return returns task's due date
      */
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 

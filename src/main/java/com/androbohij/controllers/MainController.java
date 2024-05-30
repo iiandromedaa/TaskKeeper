@@ -110,12 +110,18 @@ public class MainController extends Controller {
     }
 
     @FXML
-    void openAbout(ActionEvent event) {
-        try {
-            App.makePopUp("About");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void openAbout(ActionEvent event) throws IOException {
+        Stage popUp = new Stage();
+        popUp.setTitle("About");
+        popUp.initModality(Modality.WINDOW_MODAL);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("about.fxml"));
+        Parent par = fxmlLoader.load();
+        ((Controller)fxmlLoader.getController()).setStage(popUp);
+        Scene scene = new Scene(par);
+        popUp.initOwner(getStage());
+        popUp.setScene(scene);
+        popUp.setResizable(false);
+        popUp.show();
     }
 
     @FXML

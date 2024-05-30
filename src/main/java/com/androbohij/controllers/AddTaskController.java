@@ -2,10 +2,7 @@ package com.androbohij.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 import com.androbohij.App;
 import com.androbohij.ImportantTask;
 import com.androbohij.RecurringTask;
@@ -84,7 +81,7 @@ public class AddTaskController extends Controller {
             denier.setText("Missing required fields!");
             return;
         } else {
-            Date date = Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            LocalDate date = datePicker.getValue();
             createTask(taskTypeBox.getSelectionModel().getSelectedItem(), taskNameField.getText(), 
                        taskDescArea.getText(), date, isUrgent, recurrencePattern, priority);
             cancel(event);
@@ -160,7 +157,7 @@ public class AddTaskController extends Controller {
      * @throws IOException
      */
     private void createTask(TaskTypes type, String name, String desc, 
-    Date dueDate, boolean urgency, String recurrence, int priority) throws IOException {
+    LocalDate dueDate, boolean urgency, String recurrence, int priority) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("task.fxml"));
         AnchorPane par = fxmlLoader.load();
         Task task;

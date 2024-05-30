@@ -1,5 +1,5 @@
 package com.androbohij;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class RecurringTask extends Task {
 
@@ -9,7 +9,7 @@ public class RecurringTask extends Task {
      */
     private String recurrencePattern;
 
-    public RecurringTask(String name, String description, Date dueDate, boolean taskStatus, String recurrencePattern) {
+    public RecurringTask(String name, String description, LocalDate dueDate, boolean taskStatus, String recurrencePattern) {
         super(name, description, dueDate, taskStatus);
         this.recurrencePattern = recurrencePattern;
     }
