@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InvalidClassException;
 
 import com.androbohij.controllers.Controller;
 import com.androbohij.controllers.MainController;
@@ -59,7 +60,7 @@ public class App extends Application {
         try {
             user.setTodoList(SaveLoad.load());
             // user.displayTodoList();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | InvalidClassException e) {
             System.out.println("no saves found, starting fresh");
         } catch (ClassNotFoundException e) {
             System.out.println("we cant find the TodoList class????");

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -27,7 +28,7 @@ public class SaveLoad {
         System.out.println("saved!! :]");
     }
 
-    public static TodoList load() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static TodoList load() throws FileNotFoundException, IOException, ClassNotFoundException, InvalidClassException {
         String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TaskKeeper";
         File folder = new File(path);
         File save = new File(folder, "save.ser");
